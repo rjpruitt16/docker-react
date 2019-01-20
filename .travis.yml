@@ -6,4 +6,17 @@ before_install:
   - docker build -t rjpruitt16/docker-react -f Dockerfile.dev .
 
 script:
-    - docker run rjpruitt16/docker-react npm run test -- --coverage
+ - docker run rjpruitt16/docker-react npm run test -- --coverage
+
+deploy:
+    provider: elasticbeanstalk
+    region: "us-east-1"
+    app: "docker-react"
+    env: "DockerReact-env"
+    bucket_name: "/elasticbeanstalk-us-east-1-642876615147"
+    bucket_path: "docker-react"
+    on:
+        branch: master
+    access_key_id: "$AWS-Acces-Key"
+    secret_access_key:
+        secure: ""$AWS-Secret-Key"
